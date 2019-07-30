@@ -8,6 +8,7 @@ const passport = require('passport');
 
 
 router.post('/signup', (req, res, next) => {
+  console.log("the sign up info >>>>>>>>>>>>> ", req.body);
   const userNameVar = req.body.username;
   const password = req.body.password;
 
@@ -38,7 +39,7 @@ router.post('/signup', (req, res, next) => {
 
     const aNewUser = new User({
       username: userNameVar,
-      password: hashpass
+      password: hashPass
     });
 
     aNewUser.save(err => {
@@ -54,6 +55,7 @@ router.post('/signup', (req, res, next) => {
           res.status(500).json({ message: 'Login after signup went bad' });
           return;
         }
+        console.log("the new user after signup ========== ", aNewUser);
 
         res.status(200).json({ message: 'successfully logged in' });
       });
@@ -63,6 +65,7 @@ router.post('/signup', (req, res, next) => {
 
 
 router.post('/login', (req, res, next) => {
+  console.log('the user info on log in ------ ----- ', req.body)
   passport.authenticate('local', (err, theUser, failureDetails) => {
     if(err) {
       res.status(500).json({ message: 'Something went wrong authentiocating user' });

@@ -15,11 +15,11 @@ const session      = require('express-session');
 
     require('./config/passport-stuff');
 
-
+mongoose.Promise = Promise;
 mongoose
-  .connect('mongodb://localhost/project3', {useNewUrlParser: true})
-  .then(x => {
-    console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
+  .connect('mongodb://localhost/project3-api', {useMongoClient: true})
+  .then(() => {
+    console.log('Connected to Mongo!')
   })
   .catch(err => {
     console.error('Error connecting to mongo', err)
@@ -57,8 +57,31 @@ app.locals.title = 'Express - Generated with IronGenerator';
 
 
 
-const index = require('./routes/index');
-app.use('/', index);
+app.use(session({
+  secret: 'some secret goes here',
+  resave: true,
+  saveUninitialized: true
+}));
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+app.use(cors({
+  credentials: true,
+  origin: ['htpp://localhost:3000', 'https://blah.herokuapp.com']
+}));
+
+
+const chatRoomRoutes = require('./routes/chatRoomRoutes');
+app.use('/api/chatroom', chatRoomRoutes);
+
+
+
+
+const userRoutes = require('./routes/userRoutes');
+app.use('/api/auth', userRoutes);
 
 
 module.exports = app;
