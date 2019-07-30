@@ -60,3 +60,56 @@ router.post('/signup', (req, res, next) => {
     });
   });
 });
+
+
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, theUser, failureDetails) => {
+    if(err) {
+      res.status(500).json({ message: 'Something went wrong authentiocating user' });
+      return;
+    }
+
+    if(!theUser) {
+      // 'failureDetails' contains the error messages
+      // from the logic in 'LocalStrategy' { message: '...' }
+      res.status(401).json(failureDetails);
+      return;
+    }
+
+    // save user in session
+    req.login(theUser, (err) => {
+      if(err) {
+        res.status(500).json({ message: 'Session save went bad.' });
+        return;
+      }
+
+      // user is now logged in (that's why we can also send req.user)
+      console.log('---1233939484383892937748499---', req.user);
+      res.status(200).json(theUser);
+    });
+  })(req, res, next);
+});
+
+router.post('/logout', (req, res, next) => {
+  // req.log() is predefine by passport
+  req.logout();
+  res.status(200).json({ message: 'Log out success!' });
+});
+
+
+router.get('/getcurrentuser', (req, res, next) => {
+  // req.isAuthenticated() is predefined by passport
+  if(req.user) {
+    let newObject = {};
+    newObject.username = req.user.username;
+    newObject._id = req.user._id;
+
+    res.status(200).json(newObject);
+    return;
+  }
+  res.status(403).json({ message: 'Unauthorized' });
+});
+
+
+
+module.exports = router;
