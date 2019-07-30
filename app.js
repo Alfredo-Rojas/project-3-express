@@ -8,6 +8,12 @@ const hbs          = require('hbs');
 const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
+const cors         = require('cors');
+const passport     = require('passport');
+const session      = require('express-session');
+
+
+    require('./config/passport-stuff');
 
 
 mongoose
