@@ -78,7 +78,7 @@ const chatRoomRoutes = require('./routes/chatRoomRoutes');
 app.use('/api/chatroom', chatRoomRoutes);
 
 const meetUpRoutes = require('./routes/meetUpRoutes');
-app.use('/api/meetUp', meetUpRoutes);
+app.use('/api/meetup', meetUpRoutes);
 
 const userRoutes = require('./routes/userRoutes');
 app.use('/api/auth', userRoutes);

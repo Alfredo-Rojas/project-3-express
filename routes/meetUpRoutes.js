@@ -83,3 +83,7 @@ router.delete('/delete/:id', (req, res, next) => {
   })
   .catch(err => res.status(400).json('Error deleting the Meetup'))
 })
+
+
+
+module.exports = router;
