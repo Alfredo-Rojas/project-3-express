@@ -20,7 +20,7 @@ router.get('/showAll', (req, res, next) => {
 
 
 router.get('/details/:id', (req, res, next) => {
-  MeetUp.findById(req.params.id).populate('theUser')
+  MeetUp.findById(req.params.id)
   .then((singleMeetUp) => {
     res.json(singleMeetUp);
   })
@@ -31,26 +31,31 @@ router.get('/details/:id', (req, res, next) => {
 
 
 router.post('/create', (req, res, next) => {
+  console.log("Here is the user:")
+  console.log(req.user)
   MeetUp.create({
     title: req.body.theTitle,
-    location: {
-      streetAddress: req.body.theStreetAddress,
-      city: req.body.theCity,
-      state: req.body.theState,
-      country: req.body.theCountry,
-    },
+    //location
+    streetAddress: req.body.theStreetAddress,
+    city: req.body.theCity,
+    state: req.body.theState,
+    country: req.body.theCountry,
+
     owner: req.user._id,
-    participants: req.user._id,
+    // participants: req.user._id, []  *****
     type: req.body.theType,
     description: req.body.theDescription,
-    going: req.user._id,
-    notGoing: req.user._id,
-    checkin: [req.user._id,],
-    leaving: [req.user._id,],
+    // going: req.user._id, [] ****
+    // notGoing: req.user._id, [] ****
+    // checkin: [req.user._id,], ****
+    // leaving: [req.user._id,],  ****
     time: req.body.theDate,
 
   })
-})
+  .then(theNewMeetup => {
+    res.json(theNewMeetup)
+  }).catch(err => res.json(err))
+});
 
 
 router.post('/update/:id', (req, res, next) => {
