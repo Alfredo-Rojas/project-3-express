@@ -77,8 +77,8 @@ app.use(cors({
 const chatRoomRoutes = require('./routes/chatRoomRoutes');
 app.use('/api/chatroom', chatRoomRoutes);
 
-
-
+const meetUpRoutes = require('./routes/meetUpRoutes');
+app.use('/api/meetUp', meetUpRoutes);
 
 const userRoutes = require('./routes/userRoutes');
 app.use('/api/auth', userRoutes);

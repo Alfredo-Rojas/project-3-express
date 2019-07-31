@@ -61,9 +61,9 @@ router.post('/update/:id', (req, res, next) => {
 router.delete('/delete/:id', (req, res, next) => {
   ChatRoom.findByIdAndRemove(req.params.id)
   .then(() => {
-
-    res.status(200).json("chatroom successfully deleted")
-  }).catch(err => res.status(400).json("error deleting chatroom"))
-})
+    res.status(200).json("Chatroom successfully deleted")
+  })
+  .catch(err => res.status(400).json("Error deleting the chatroom"))
+});
 
 module.exports = router;
